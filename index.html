@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dev.finance$</title>
+
+    <link rel="stylesheet" href="./styles.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <h1>dev.finance$</h1>
+        <h1 id="logo">dev.finance$</h1>
     </header>
+
     <main>
-        <section>
+        <section id="balance">
             <h2>Balance</h2>
+
             <div class="card">
                 <h3>Incoming</h3>
                 <p>R$ 5.000,00</p>
             </div>
+
             <div class="card">
                 <h3>Outgoing</h3>
                 <p>R$ 2.000,00</p>
             </div>
+
             <div class="card">
                 <h3>Total</h3>
                 <p>R$ 3.000,00</p>
             </div>
+
         </section>
-        <section>
+
+        <section id="transaction">
             <h2>Transactions</h2>
-            <table>
+            <table id="data-table">
                 <thead>
-                    <th>Description</th>
-                    <th>Value</th>
-                    <th>Date</th>
+                    <tr>
+                        <th>Description</th>
+                        <th>Value</th>
+                        <th>Date</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -51,13 +67,14 @@
                         <td>23/01/2022</td>
                     </tr>
                 </tbody>
-                <tfoot>
-
-                </tfoot>
+                <tfoot></tfoot>
             </table>
         </section>
     </main>
+
     <footer>
+        <p>dev.finance$</p>
     </footer>
 </body>
+
 </html>
