@@ -10,7 +10,7 @@
 }
 
 html {
-    font-size: 93.75%;
+    font-size: 93.75%; /* 15px */
 }
 
 body {
@@ -40,6 +40,7 @@ h2 {
     margin-top: 3.2rem;
     margin-bottom: 0.8rem;
     color: var(--dark-blue);
+
     font-weight: normal;
 }
 /*=====Links and Buttons=====*/
@@ -82,6 +83,7 @@ header {
     border-radius: 0.25rem;
 
     margin-bottom: 2rem;
+
     color: var(--dark-blue);
 }
 .card h3 {
@@ -95,7 +97,7 @@ header {
 .card p {
     font-size: 2rem;
     line-height: 3rem;
-    white-space: nowrap;
+    
     margin-top: 1rem;
 }
 .card.total {
@@ -108,6 +110,10 @@ header {
     width: 100%;
     border-spacing: 0 0.5rem;
     color: #969cb3;
+
+    /*responsive*/
+    display: block;
+    overflow-x: auto;
 }
 table thead tr th:first-child, 
 table tbody tr td:first-child {
@@ -156,5 +162,18 @@ footer {
     text-align: center;
     padding: 4rem 0 2rem;
     color: var(--dark-blue);
+    
     opacity: 0.6;
+}
+/*=====Responsive=====*/
+@media (min-width: 800px){
+    html {
+        font-size:87.5%;
+    }
+    #balance {
+        display: grid;
+        /*grid-template-columns: 1fr 1fr 1fr;*/
+        grid-template-columns: repeat(3,1fr);
+        gap: 2rem;
+    }
 }
