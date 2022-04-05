@@ -96,7 +96,7 @@
     </main>
 
     <!-- Modal pode ficar em qualquer lugar, pois será manejado-->
-    <div class="modal-overlay active">
+    <div class="modal-overlay">
         <div class="modal">
             <div id="form">
                 <h2>New transaction</h2>
@@ -126,20 +126,7 @@
     <footer>
         <p>dev.finance$</p>
     </footer>
-    <script>
-        const Modal = {
-            open (){
-                //Open modal
-                //Add class active to the modal
-                document.querySelector('.modal-overlay').classList.add('active')
-            },
-            close () {
-                //Close modal
-                //Remove class active to the modal
-                document.querySelector('.modal-overlay').classList.remove('active')
-            }
-        }
-    </script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
