@@ -72,12 +72,13 @@
         </section>
     </main>
 
-    <!-- Modal pode ficar em qualquer lugar, pois será manejado-->
+    <!-- Modal can be placed at anywhere, cause it will open/close-->
     <div class="modal-overlay">
         <div class="modal">
             <div id="form">
                 <h2>New transaction</h2>
-                <form action="">
+                <!--Modifying default behavior of the form-->
+                <form action="" onsubmit="Form.submit(event)" >
                     <div class="input-group">
                         <label class="sr-only" for="description">Description</label>
                         <input id="description" name="description" type="text" placeholder="Description">
