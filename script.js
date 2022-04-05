@@ -1,11 +1,11 @@
 //Modal buttons, close and open
 const Modal = {
-    open (){
+    open() {
         //Open modal
         //Add class active to the modal
         document.querySelector('.modal-overlay').classList.add('active')
     },
-    close () {
+    close() {
         //Close modal
         //Remove class active to the modal
         document.querySelector('.modal-overlay').classList.remove('active')
@@ -14,25 +14,25 @@ const Modal = {
 
 //random data to the table
 const transactions = [{
-    id: 1,
+    //id: 1,
     description: "Rent",
     amount: -80000,
     date: "2022-01-05"
 },
 {
-    id: 2,
+    //id: 2,
     description: "Internet",
     amount: -20000,
     date: "2022-01-10"
 },
 {
-    id: 3,
+    //id: 3,
     description: "Web page (job)",
     amount: 500000,
     date: "2022-01-23"
 },
 {
-    id: 4,
+    //id: 4,
     description: "Stocks",
     amount: 20000,
     date: "2022-01-30"
@@ -40,33 +40,41 @@ const transactions = [{
 
 const Transaction = {
     all: transactions,
-    incomes(){
-        let income =0 ;
+    add(transaction) {
+        Transaction.all.push(transaction);
+        App.reload();
+    },
+    remover(index) {
+        Transaction.all.splice(index, 1)
+        App.reload()
+    },
+    incomes() {
+        let income = 0;
         //get all transactions
         //for each trasanction
-        Transaction.all.forEach( transaction => {
+        Transaction.all.forEach(transaction => {
             //if it's greater than zero
-            if (transaction.amount > 0){
+            if (transaction.amount > 0) {
                 //sum it all up
                 income += transaction.amount
             }
         })
         return income;
     },
-    outcomes(){
+    outcomes() {
         let outcome = 0;
         //get all transactions
         //for each trasanction
-        Transaction.all.forEach( transaction => {
+        Transaction.all.forEach(transaction => {
             //if it's less than zero
-            if (transaction.amount < 0){
+            if (transaction.amount < 0) {
                 //sum it all up    
                 outcome += transaction.amount
             }
         })
         return outcome;
     },
-    total(){
+    total() {
         return Transaction.incomes() + Transaction.outcomes()
     }
 
@@ -95,19 +103,22 @@ const DOM = {
         `
         return html
     },
-    updateBalance(){
+    updateBalance() {
         document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes());
         document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.outcomes());
         document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total());
+    },
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
 //converting numbers to currency BRL
 const Utils = {
-    formatCurrency(value){
+    formatCurrency(value) {
         const sign = Number(value) < 0 ? "&minus;" : ""
         value = String(value).replace(/\D/g, "")
-        value = (Number(value)/100)
+        value = (Number(value) / 100)
         value = value.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL"
@@ -116,9 +127,19 @@ const Utils = {
     }
 };
 
-//autofill data table
-transactions.forEach( function(transaction) {
-    DOM.addTransaction(transaction);
-});
+const App = {
+    init() {
+        //autofill data table
+        Transaction.all.forEach(function (transaction) {
+            DOM.addTransaction(transaction);
+        });
 
-DOM.updateBalance();
+        DOM.updateBalance();
+    },
+    reload() {
+        DOM.clearTransactions()
+        App.init();
+    },
+}
+
+App.init()
