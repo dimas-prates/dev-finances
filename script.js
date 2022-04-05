@@ -39,11 +39,12 @@ const transactions = [{
 }]
 
 const Transaction = {
+    all: transactions,
     incomes(){
         let income =0 ;
         //get all transactions
         //for each trasanction
-        transactions.forEach( transaction => {
+        Transaction.all.forEach( transaction => {
             //if it's greater than zero
             if (transaction.amount > 0){
                 //sum it all up
@@ -56,7 +57,7 @@ const Transaction = {
         let outcome = 0;
         //get all transactions
         //for each trasanction
-        transactions.forEach( transaction => {
+        Transaction.all.forEach( transaction => {
             //if it's less than zero
             if (transaction.amount < 0){
                 //sum it all up    
