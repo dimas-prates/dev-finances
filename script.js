@@ -44,7 +44,7 @@ const Transaction = {
         Transaction.all.push(transaction);
         App.reload();
     },
-    remover(index) {
+    remove(index) {
         Transaction.all.splice(index, 1)
         App.reload()
     },
@@ -77,7 +77,6 @@ const Transaction = {
     total() {
         return Transaction.incomes() + Transaction.outcomes()
     }
-
 }
 
 
@@ -124,8 +123,63 @@ const Utils = {
             currency: "BRL"
         })
         return `${sign}${value}`;
-    }
+    },
+    formatAmount(amount){
+        amount = Number(amount) * 100
+        return amount;
+    },
+    formatDate(date){
+        const splittedDate = date.split("-")
+        return `${splittedDate[2]}/${splittedDate[1]/${splittedDate[0]}`
+        
+    },
 };
+
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value,
+        }
+    },
+    verifyFields() {
+        //const description = Form.getValues().description
+        const { description, amount, date } = Form.getValues()
+        if (description.trim() === "" | amount.trim() === "" | date.trim() === "") {
+            throw new Error("Please, fulfill all the fields")
+        }
+    },
+    formatData() {
+        let { description, amount, date } = Form.getValues()
+        amount = Utils.formatAmount();
+        date = Utils.formatDate(date)
+
+    },
+    submit(event) {
+        //disabling default behavior of the form
+        event.preventDefault()
+
+        try {
+            //Verifying all information
+            Form.verifyFields()
+            //Format the data to save it
+
+            Form.formatData()
+            //Save it
+            //Erase data from the form
+            //close modal window
+            //Refresh the app
+        } catch (error) {
+            alert(error.message)
+        }
+
+    }
+}
 
 const App = {
     init() {
