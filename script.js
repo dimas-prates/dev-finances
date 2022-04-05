@@ -1,3 +1,4 @@
+//Modal buttons, close and open
 const Modal = {
     open (){
         //Open modal
@@ -11,6 +12,7 @@ const Modal = {
     }
 }
 
+//random data to the table
 const transactions = [{
     id: 1,
     description: "Rent",
@@ -45,6 +47,8 @@ const Transaction = {
     }
 }
 
+
+//selecting tag table and filling in data
 const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
     addTransaction(transaction, index) {
@@ -68,11 +72,13 @@ const DOM = {
     }
 }
 
+//converting numbers to currency BRL
 const Utils = {
     formatCurrency(value){
         const sign = Number(value) < 0 ? "&minus;" : ""
         value = String(value).replace(/\D/g, "")
-        value = (Number(value)/100).toLocaleString("pt-BR", {
+        value = (Number(value)/100)
+        value = value.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL"
         })
@@ -80,6 +86,7 @@ const Utils = {
     }
 };
 
+//autofill data table
 transactions.forEach( function(transaction) {
     DOM.addTransaction(transaction);
 });
