@@ -12,7 +12,7 @@ const Modal = {
     }
 }
 
-//random data to the table
+//random data for the table
 const transactions = [{
     //id: 1,
     description: "Rent",
@@ -42,8 +42,26 @@ const transactions = [{
     date: "30/01/2022"
 }]
 
+//Working with local storage
+const Storage = {
+    get() {
+        //console.log(localStorage)
+        //here it works the opposite, string -> JSON/Array
+
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
+    },
+    set(transactions) {
+        //Attention to the way localStorage operates
+        //it's all about property/name/key and value
+        //to set it needs to be a string, so therefor Array/JSON-> String
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+
+    }
+}
+
 const Transaction = {
-    all: transactions,
+    // all: transactions,
+    all: Storage.get(),
     add(transaction) {
         Transaction.all.push(transaction);
         App.reload();
@@ -83,17 +101,19 @@ const Transaction = {
     }
 }
 
-
 //selecting tag table and filling in data
 const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
     addTransaction(transaction, index) {
         const tr = document.createElement('tr')
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
-        DOM.transactionsContainer.appendChild(tr)
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
 
+        //Adding index to the data fields
+        tr.dataset.index = index
+
+        DOM.transactionsContainer.appendChild(tr)
     },
-    innerHTMLTransaction(transaction) {
+    innerHTMLTransaction(transaction, index) {
         const CCSClasses = transaction.amount < 0 ? "expense" : "income"
         const amount = Utils.formatCurrency(transaction.amount);
         const html = `
@@ -101,7 +121,7 @@ const DOM = {
             <td class="${CCSClasses}">${amount}</td>
             <td class="date">${transaction.date}</td>
             <td>
-                <img src="./assets/minus.svg" alt="Delete transaction">
+                <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Delete transaction">
             </td>
         `
         return html
@@ -124,7 +144,7 @@ const Utils = {
         value = Number(value) / 100
         value = value.toLocaleString("pt-BR", {
             style: "currency",
-            currency: "BRL" 
+            currency: "BRL"
         })
         return `${sign}${value}`;
     },
@@ -164,9 +184,8 @@ const Form = {
         date = Utils.formatDate(date)
 
         //return {description:description,amount:amount,date:date}
-        return {description, amount, date}
+        return { description, amount, date }
     },
-
     saveTransaction(transaction) {
         Transaction.add(transaction)
     },
@@ -200,11 +219,14 @@ const Form = {
 const App = {
     init() {
         //autofill data table
-        Transaction.all.forEach(function (transaction) {
-            DOM.addTransaction(transaction);
-        });
+        // Transaction.all.forEach(function (transaction,index) {
+        //     DOM.addTransaction(transaction,index);
+        // });
+        Transaction.all.forEach(DOM.addTransaction)
 
         DOM.updateBalance();
+
+        Storage.set(Transaction.all)
     },
     reload() {
         DOM.clearTransactions()
