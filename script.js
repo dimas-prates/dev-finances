@@ -12,7 +12,7 @@ const Modal = {
     }
 }
 
-//random data for the table
+//random datas for the table
 const transactions = [{
     //id: 1,
     description: "Rent",
