@@ -17,25 +17,29 @@ const transactions = [{
     //id: 1,
     description: "Rent",
     amount: -80000,
-    date: "2022-01-05"
+    //date: "2022-01-05"
+    date: "05/01/2022"
 },
 {
     //id: 2,
     description: "Internet",
     amount: -20000,
-    date: "2022-01-10"
+    //date: "2022-01-10"
+    date: "10/01/2022"
 },
 {
     //id: 3,
     description: "Web page (job)",
     amount: 500000,
-    date: "2022-01-23"
+    //date: "2022-01-23"
+    date: "23/01/2022"
 },
 {
     //id: 4,
     description: "Stocks",
     amount: 20000,
-    date: "2022-01-30"
+    //date: "2022-01-30"
+    date: "30/01/2022"
 }]
 
 const Transaction = {
@@ -117,21 +121,21 @@ const Utils = {
     formatCurrency(value) {
         const sign = Number(value) < 0 ? "&minus;" : ""
         value = String(value).replace(/\D/g, "")
-        value = (Number(value) / 100)
+        value = Number(value) / 100
         value = value.toLocaleString("pt-BR", {
             style: "currency",
-            currency: "BRL"
+            currency: "BRL" 
         })
         return `${sign}${value}`;
     },
-    formatAmount(amount){
-        amount = Number(amount) * 100
+    formatAmount(amount) {
+        //amount = Number(amount) * 100
+        amount = Number(amount.replace(/\,\./g, "")) * 100
         return amount;
     },
-    formatDate(date){
+    formatDate(date) {
         const splittedDate = date.split("-")
-        return `${splittedDate[2]}/${splittedDate[1]/${splittedDate[0]}`
-        
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
     },
 };
 
@@ -144,7 +148,7 @@ const Form = {
         return {
             description: Form.description.value,
             amount: Form.amount.value,
-            date: Form.date.value,
+            date: Form.date.value
         }
     },
     verifyFields() {
@@ -156,9 +160,20 @@ const Form = {
     },
     formatData() {
         let { description, amount, date } = Form.getValues()
-        amount = Utils.formatAmount();
+        amount = Utils.formatAmount(amount);
         date = Utils.formatDate(date)
 
+        //return {description:description,amount:amount,date:date}
+        return {description, amount, date}
+    },
+
+    saveTransaction(transaction) {
+        Transaction.add(transaction)
+    },
+    clearFields() {
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
     },
     submit(event) {
         //disabling default behavior of the form
@@ -168,12 +183,13 @@ const Form = {
             //Verifying all information
             Form.verifyFields()
             //Format the data to save it
-
-            Form.formatData()
+            const transaction = Form.formatData()
             //Save it
+            Form.saveTransaction(transaction)
             //Erase data from the form
+            Form.clearFields()
             //close modal window
-            //Refresh the app
+            Modal.close()
         } catch (error) {
             alert(error.message)
         }
