@@ -150,8 +150,14 @@ const Utils = {
     },
     formatAmount(amount) {
         //amount = Number(amount) * 100
-        amount = Number(amount.replace(/\,\./g, "")) * 100
-        return amount;
+        //amount = Number(amount.replace(/\,\./g, "")) * 100
+        //Fixing the thought of it
+        //amount = amount.replace(/\,?\.?/g, "") * 100
+
+        //although the correct way is the one below
+        //because <input type="number"> already removed the signs
+        value = valuer * 100
+        return Math.round(amount);
     },
     formatDate(date) {
         const splittedDate = date.split("-")
