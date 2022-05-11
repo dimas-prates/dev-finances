@@ -156,7 +156,7 @@ const Utils = {
 
         //although the correct way is the one below
         //because <input type="number"> already removed the signs
-        value = valuer * 100
+        value = value * 100
         return Math.round(amount);
     },
     formatDate(date) {
